@@ -31,7 +31,13 @@ public class ArrayGenerator {
 		
 		for(int i = 0; i < array.length; i++) {
 			int j = r.nextInt(1,array.length);
-			array[i] = j;
+			for(int k = 0; k < array.length; k++) {
+				if(	array[k] == j) {
+					break;
+				}else {
+					array[i] = j;
+				}
+			}
 		}	
 		
 		return array;

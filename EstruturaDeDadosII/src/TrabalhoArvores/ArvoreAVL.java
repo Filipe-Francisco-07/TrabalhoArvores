@@ -10,7 +10,6 @@ public class ArvoreAVL {
 		this.dado = dado;
 		dir = esq = null;
 		altd = alte = 0;
-		copy = 1;
 
 	}
  }
@@ -23,6 +22,7 @@ public class ArvoreAVL {
 
 	public void inserir(int dado) {
 		raiz = inserirDado(raiz,dado);
+	    System.out.println("Valor "+dado+" foi inserido.");
 	}
 	
 	public void verNosPrimos() {
@@ -70,9 +70,6 @@ public class ArvoreAVL {
 				raiz.altd = raiz.dir.alte + 1;
 			}
 			raiz = balanceamento(raiz);
-
-		}else {
-			raiz.copy++;
 		}
 		return raiz;
 	}
@@ -80,6 +77,7 @@ public class ArvoreAVL {
 	
 	public void remove(int chave) {
 		raiz = removeItem(raiz,chave);
+	    System.out.println("Valor "+chave+" foi removido.");
 		
 	}
 	
@@ -110,6 +108,26 @@ public class ArvoreAVL {
 			nodo = nodo.esq;
 		}
 		return nodo;
+	}
+	
+	public boolean buscar(int valor) {
+	    return buscarNodo(raiz, valor);
+	}
+
+	private boolean buscarNodo(Nodo nodo, int valor) {
+	    if (nodo == null) {
+	        return false; 
+	    }
+
+	    if (valor == nodo.dado) {
+	        return true; 
+	    }
+
+	    if (valor < nodo.dado) {
+	        return buscarNodo(nodo.esq, valor); 
+	    } else {
+	        return buscarNodo(nodo.dir, valor);
+	    }
 	}
 
 	private Nodo balanceamento (Nodo raiz) {
@@ -227,6 +245,39 @@ public class ArvoreAVL {
 	
 	public int somaNivelImpar() {
 	    return somarNosImpares(raiz, 0);
+	}
+	
+	public void inserirSemRecursao(int dado) {
+	    Nodo novoNodo = new Nodo(dado);
+	    
+	    if (raiz == null) {
+	        raiz = novoNodo;
+	        return;
+	    }
+	    
+	    Nodo atual = raiz;
+	    
+	    while (true) {
+	        if (dado < atual.dado) {
+	            if (atual.esq == null) {
+	                atual.esq = novoNodo;
+	                break;
+	            }
+	            atual = atual.esq;
+	        } else if (dado > atual.dado) {
+	            if (atual.dir == null) {
+	                atual.dir = novoNodo;
+	                break;
+	            }
+	            atual = atual.dir;
+	        } else {
+	            atual.copy++;
+	            break;
+	        }
+	    }
+	    
+	    atual = balanceamento(atual);
+	    System.out.println("Valor "+dado+" foi inserido.");
 	}
 
 	private int somarNosImpares(Nodo raiz, int nivelAtual) {

@@ -105,26 +105,42 @@ public class ArvoreBinaria {
 	
 	public void insert(int key) {
 		raiz = insertData(raiz,key);
+	    System.out.println("Valor "+key+" foi inserido.");
 	}
 	
 	private Nodo insertData(Nodo raiz, int key) {
 		if(raiz == null) {
 			raiz = new Nodo(key);
-			System.out.println("inserted at the root");
 			tamanho_arvore++;
 			return raiz;
 		}
 		if(key < raiz.key) {
 			raiz.left = insertData(raiz.left,key);
-			System.out.println("inserted at left side");
 		}else if(key > raiz.key) {
 			raiz.right = insertData(raiz.right,key);
-			System.out.println("inserted at right side");
-		}else {
-			System.out.println("stop :(");
 		}
 		
 		return raiz;
+	}
+	
+	public boolean buscar(int valor) {
+	    return buscarNodo(raiz, valor);
+	}
+
+	private boolean buscarNodo(Nodo nodo, int valor) {
+	    if (nodo == null) {
+	        return false;
+	    }
+
+	    if (valor == nodo.key) {
+	        return true;
+	    }
+
+	    if (valor < nodo.key) {
+	        return buscarNodo(nodo.left, valor); 
+	    } else {
+	        return buscarNodo(nodo.right, valor); 
+	    }
 	}
 	
 	public void showJustPairs() {
@@ -193,8 +209,11 @@ public class ArvoreBinaria {
 	
 	public void remove(int chave) {
 		raiz = removeItem(raiz,chave);
+	    System.out.println("Valor "+chave+" foi removido.");
 		
 	}
+	
+	  
 	
 	private Nodo removeItem(Nodo raiz, int chave) {
 		if(raiz == null) {
@@ -390,6 +409,7 @@ public class ArvoreBinaria {
     }
     
     public void inserirSemRecursividade(int valor) {
+    	
         Nodo novoNodo = new Nodo(valor);
 
         if (raiz == null) {
@@ -400,7 +420,9 @@ public class ArvoreBinaria {
 
         Nodo nodo = raiz;
         Nodo aux;
-
+        
+        System.out.println("Valor "+valor+" foi inserido.");
+        
         while (true) {
         	aux = nodo;
             if (valor < nodo.key) {
@@ -419,6 +441,7 @@ public class ArvoreBinaria {
                 }
             }
         }
+	   
     }
 	 
 	 
